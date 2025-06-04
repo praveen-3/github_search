@@ -108,10 +108,12 @@ class SearchFragment : Fragment() {
                 launch {
                     viewModel.error.collectLatest { error ->
                         error?.let {
-                            binding.errorView.apply {
-                                text = error
-                                isVisible = error != null
-                            }
+                            binding.errorContainer.isVisible = true
+                            binding.swipeRefresh.isVisible = false
+                            binding.errorView.text = error
+                        } ?: run {
+                            binding.errorContainer.isVisible = false
+                            binding.swipeRefresh.isVisible = true
                         }
                     }
                 }

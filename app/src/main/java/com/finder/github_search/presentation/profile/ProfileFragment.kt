@@ -86,9 +86,13 @@ class ProfileFragment : Fragment() {
                 }
                 launch {
                     viewModel.error.collect { error ->
-                        binding.errorView.apply {
-                            text = error
-                            isVisible = error != null
+                        error?.let {
+                            binding.errorContainer.isVisible = true
+                            binding.contentContainer.isVisible = false
+                            binding.errorView.text = error
+                        } ?: run {
+                            binding.errorContainer.isVisible = false
+                            binding.contentContainer.isVisible = true
                         }
                     }
                 }
