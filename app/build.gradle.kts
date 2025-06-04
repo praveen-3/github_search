@@ -20,17 +20,23 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "GITHUB_TOKEN", "\"${System.getenv("GITHUB_TOKEN") ?: ""}\"")
+        }
         release {
+            buildConfigField("String", "GITHUB_TOKEN", "\"${System.getenv("GITHUB_TOKEN") ?: ""}\"")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
     
     compileOptions {
